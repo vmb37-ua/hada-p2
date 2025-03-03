@@ -19,10 +19,10 @@ namespace Hada
             for (uint i = 0; i < longitud; i++) {
                 if (orientacion == 'h')
                 {
-                    //CoordenadasBarco.Add(coordenadaInicio.Fila+i, Nombre);
+                    CoordenadasBarco.Add(coordenadaInicio.Fila+i, Nombre);
                 }
                 else if (orientacion == 'v') {
-                    //CoordenadasBarco.Add(coordenadaInicio.Columna + i, Nombre);
+                    CoordenadasBarco.Add(coordenadaInicio.Columna + i, Nombre);
                 }
             }
             
@@ -36,10 +36,12 @@ namespace Hada
             if (encontrado)
             {
                 CoordenadasBarco[c] = Nombre+"_T";
-                //Lanzar evento
+                if (eventoTocado != null) {
+                    eventoTocado(this, new TocadoArgs(Nombre, c));
+                }
                 NumDanyos++;
-                if (hundido()) { 
-                    //Llamar evento
+                if (hundido() && eventoHundido!=null) {
+                    eventoHundido(this, new HundidoArgs(Nombre));
                 }
             }
         }
