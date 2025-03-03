@@ -58,9 +58,14 @@ namespace Hada
 
         public override string ToString() {
             string cadena = "";
-
-            //PENDIENTE ACABAR---------------------------------------------------------
-            cadena += "[" + Nombre + "] - DAÑOS: [" + NumDanyos + "]";
+            cadena += "[" + Nombre + "] - DAÑOS: [" + NumDanyos + "] - HUNDIDO: ["+this.hundido()+"] - COORDENADAS:";
+            foreach (var pos in CoordenadasBarco) {
+                cadena += " [(" + pos.Key.Fila + "," + pos.Key.Columna + ")] :" + pos.Value + "]";
+            }
+            return cadena;
         }
+
+        public event EventHandler<TocadoArgs> eventoTocado;
+        public event EventHandler<HundidoArgs> eventoHundido;
     }
 }
