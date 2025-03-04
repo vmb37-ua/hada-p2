@@ -40,7 +40,7 @@ namespace Hada
                 for (uint j = 0; j < tamTablero; j++) {
                     Coordenada nueva = new Coordenada(i, j);
                     string cadena;
-                    if (!casillasTablero.TryGetValue(nueva, out cadena);) {
+                    if (!casillasTablero.TryGetValue(nueva, out cadena)) {
                         casillasTablero.Add(nueva, "AGUA");
                     }
                 }
