@@ -16,13 +16,13 @@ namespace Hada
         public Barco(string nombre, int longitud, char orientacion, Coordenada coordenadaInicio) {
             Nombre = nombre;
             NumDanyos = 0;
-            for (uint i = 0; i < longitud; i++) {
+            for (int i = 0; i < longitud; i++) {
                 if (orientacion == 'h')
                 {
-                    CoordenadasBarco.Add(coordenadaInicio.Fila+i, Nombre);
+                    CoordenadasBarco.Add(new Coordenada (coordenadaInicio.Fila+i, coordenadaInicio.Columna), Nombre);
                 }
                 else if (orientacion == 'v') {
-                    CoordenadasBarco.Add(coordenadaInicio.Columna + i, Nombre);
+                    CoordenadasBarco.Add(new Coordenada (coordenadaInicio.Fila ,coordenadaInicio.Columna + i), Nombre);
                 }
             }
             

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,8 +37,8 @@ namespace Hada
                 }
             }
 
-            for (uint i = 0; i < tamTablero; i++) {
-                for (uint j = 0; j < tamTablero; j++) {
+            for (int i = 0; i < tamTablero; i++) {
+                for (int j = 0; j < tamTablero; j++) {
                     Coordenada nueva = new Coordenada(i, j);
                     string cadena;
                     if (!casillasTablero.TryGetValue(nueva, out cadena)) {
@@ -46,5 +47,57 @@ namespace Hada
                 }
             }
         }
+
+        public void Disparar(Coordenada c) {
+            if (c.Fila >= tamTablero || c.Columna >= tamTablero) {
+                System.Console.WriteLine("La coordenada (" + c.Fila + "," + c.Columna + ") está fuera de las dimensiones del tablero."); 
+            }
+            foreach (Barco barco in barcos) {
+                barco.Disparo(c);
+            }
+            coordenadasDisparadas.Add(c);
+        }
+
+        public string DibujarTablero() {
+            string resultado = "";
+            for (int i = 0; i < tamTablero; i++) {
+                for (int j = 0; j < tamTablero; j++) {
+                    Coordenada c = new Coordenada(i,j);
+                    string cadena;
+                    resultado+="["+casillasTablero.TryGetValue(c, out cadena)+"]";
+                }
+                resultado += '\n';
+            }
+            return resultado;
+        }
+
+        public override string ToString() {
+            string res = "";
+
+            foreach (Barco barco in barcos) {
+                res += barco.ToString()+'\n';
+            }
+            res += "Coordenadas disparadas: ";
+            foreach (Coordenada coord in coordenadasDisparadas) {
+                res += coord.ToString() + " ";
+            }
+            res += "\nCoordenadas tocadas: ";
+            foreach (Coordenada coord in coordenadasTocadas){
+                res += coord.ToString() + " ";
+            }
+            res += "\n\nCASILLAS TABLERO\n-------------------\n" + this.ToString();
+
+            return res;
+        }
+
+        private void cuandoEventoTocado() { 
+            // Actualizar casilla?
+        }
+
+        private void cuandoEventoHundido() { 
+            // Imprimir hundido?
+        }
+
+        public event EventHandler<EventArgs> eventoFinPartida;
     }
 }
