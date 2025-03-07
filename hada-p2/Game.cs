@@ -15,9 +15,9 @@ namespace Hada
 
         private void gameLoop()
         {
-            Barco barco1 = new Barco("Viktor", 3, 'h', new Coordenada(4, 4));
-            Barco barco2 = new Barco("Karlik", 2, 'v', new Coordenada(1, 2));
-            Barco barco3 = new Barco("Veldemar", 3, 'h', new Coordenada(3, 1));
+            Barco barco1 = new Barco("VIKT", 3, 'h', new Coordenada(4, 4));
+            Barco barco2 = new Barco("KARL", 2, 'v', new Coordenada(1, 2));
+            Barco barco3 = new Barco("VELD", 3, 'h', new Coordenada(3, 1));
 
             List<Barco> barcos = new List<Barco>();
             barcos.Add(barco1);
@@ -25,6 +25,7 @@ namespace Hada
             barcos.Add(barco3);
 
             Tablero tablero = new Tablero(9, barcos);
+            tablero.eventoFinPartida += cuandoEventoFinPartida;
 
             string output;
             int coma;
@@ -46,6 +47,8 @@ namespace Hada
                     {
                         tablero.Disparar(new Coordenada(int.Parse(xString), int.Parse(yString)));
                     }
+
+                    System.Console.WriteLine(tablero.ToString());
                 }
             }
         }

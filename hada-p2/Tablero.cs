@@ -28,6 +28,8 @@ namespace Hada
             coordenadasTocadas = new List<Coordenada>();
             barcosEliminados = new List<Barco>();
             casillasTablero = new Dictionary<Coordenada, string>();
+
+            inicializaCasillasTablero();
         }
 
         private void inicializaCasillasTablero() {
@@ -35,6 +37,8 @@ namespace Hada
                 foreach (var coord in p.CoordenadasBarco) {
                     casillasTablero.Add(coord.Key, coord.Value);
                 }
+                p.eventoHundido += cuandoEventoHundido;
+                p.eventoTocado += cuandoEventoTocado;
             }
 
             for (int i = 0; i < tamTablero; i++) {
@@ -85,19 +89,27 @@ namespace Hada
             foreach (Coordenada coord in coordenadasTocadas){
                 res += coord.ToString() + " ";
             }
-            res += "\n\nCASILLAS TABLERO\n-------------------\n" + this.ToString();
+            res += "\n\nCASILLAS TABLERO\n-------------------\n";
+
+            for (int i = 0; i < tamTablero; i++) {
+                for (int j = 0; j < tamTablero; j++) {
+                    res += "[" + casillasTablero[new Coordenada(i, j)] + "]";
+                }
+                res += "\n";
+            }
 
             return res;
         }
 
-        private void cuandoEventoTocado(Barco sender, TocadoArgs e) {
-            casillasTablero[e.CoordenadaImpacto] = sender.Nombre + "_T";
-            System.Console.WriteLine("TABLERO: Barco ["+ sender.Nombre+"] tocado en:");
+        private void cuandoEventoTocado(object sender, TocadoArgs e) {
+            coordenadasTocadas.Add(e.CoordenadaImpacto);
+            casillasTablero[e.CoordenadaImpacto] = ((Barco)sender).Nombre + "_T";
+            System.Console.WriteLine("TABLERO: Barco ["+ ((Barco)sender).Nombre+"] tocado en:");
             System.Console.WriteLine("Coordenada: [(" + e.CoordenadaImpacto.Fila + "," + e.CoordenadaImpacto.Columna + ")]");
         }
 
-        private void cuandoEventoHundido(Barco sender, HundidoArgs e) {
-            System.Console.WriteLine("TABLERO: Barco [" + sender.Nombre + "] hundido!!");
+        private void cuandoEventoHundido(object sender, HundidoArgs e) {
+            System.Console.WriteLine("TABLERO: Barco [" + ((Barco)sender).Nombre + "] hundido!!");
             bool encontrado_flote = false;
             foreach (Barco b in barcos) {
                 if (!b.hundido()) { 

@@ -16,13 +16,15 @@ namespace Hada
         public Barco(string nombre, int longitud, char orientacion, Coordenada coordenadaInicio) {
             Nombre = nombre;
             NumDanyos = 0;
+            CoordenadasBarco = new Dictionary<Coordenada, String>();
+
             for (int i = 0; i < longitud; i++) {
                 if (orientacion == 'h')
                 {
-                    CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila + i, coordenadaInicio.Columna), Nombre);
+                    CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila, coordenadaInicio.Columna + i), Nombre);
                 }
                 else if (orientacion == 'v') {
-                    CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila, coordenadaInicio.Columna + i), Nombre);
+                    CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila + i, coordenadaInicio.Columna), Nombre);
                 }
             }
             
@@ -53,16 +55,18 @@ namespace Hada
                 if (pos.Value != Nombre+"_T")
                 {
                     aFlote = true;
+                    break;
                 }
             }
             return !aFlote;
         }
 
+        
         public override string ToString() {
             string cadena = "";
             cadena += "[" + Nombre + "] - DAÑOS: [" + NumDanyos + "] - HUNDIDO: ["+this.hundido()+"] - COORDENADAS:";
             foreach (var pos in CoordenadasBarco) {
-                cadena += " [(" + pos.Key.Fila + "," + pos.Key.Columna + ")] :" + pos.Value + "]";
+                cadena += " [(" + pos.Key.Fila + "," + pos.Key.Columna + ")] :" + pos.Value;
             }
             return cadena;
         }
