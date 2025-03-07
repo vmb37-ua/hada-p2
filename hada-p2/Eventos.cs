@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hada
 {
-    internal class TocadoArgs
+    internal class TocadoArgs : EventArgs
     {
         private string nombre;
         private Coordenada coordenadaImpacto;
@@ -26,7 +26,7 @@ namespace Hada
             CoordenadaImpacto = coordenadaImpacto;
         }
     }
-    internal class HundidoArgs
+    internal class HundidoArgs : EventArgs
     {
         private string nombre;
         public string Nombre

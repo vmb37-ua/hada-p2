@@ -19,10 +19,10 @@ namespace Hada
             for (int i = 0; i < longitud; i++) {
                 if (orientacion == 'h')
                 {
-                    CoordenadasBarco.Add(new Coordenada (coordenadaInicio.Fila+i, coordenadaInicio.Columna), Nombre);
+                    CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila+i, coordenadaInicio.Columna), Nombre);
                 }
                 else if (orientacion == 'v') {
-                    CoordenadasBarco.Add(new Coordenada (coordenadaInicio.Fila ,coordenadaInicio.Columna + i), Nombre);
+                    CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila, coordenadaInicio.Columna + i), Nombre);
                 }
             }
             
