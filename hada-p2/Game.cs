@@ -31,7 +31,7 @@ namespace Hada
             int coma;
             while (!finPartida)
             {
-                Console.Write("Introduce coordenada (formato: N,N) o salir ('s'): ");
+                Console.WriteLine("Introduce la coordenada a la que disparar FILA,COLUMNA ('S' para Salir):");
                 output = Console.ReadLine();
                 coma = output.IndexOf(',');
                 if ((output == "s") || (output == "S"))

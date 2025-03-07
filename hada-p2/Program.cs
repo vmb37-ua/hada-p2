@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hada;
 
-namespace hada_p2
+namespace Hada
 {
     internal class Program
     {

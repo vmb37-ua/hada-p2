@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using hada_p2;
 
 namespace Hada
 {
@@ -13,46 +12,53 @@ namespace Hada
         public string Nombre;
         public int NumDanyos;
 
-        public Barco(string nombre, int longitud, char orientacion, Coordenada coordenadaInicio) {
+        public Barco(string nombre, int longitud, char orientacion, Coordenada coordenadaInicio)
+        {
             Nombre = nombre;
             NumDanyos = 0;
             CoordenadasBarco = new Dictionary<Coordenada, String>();
 
-            for (int i = 0; i < longitud; i++) {
+            for (int i = 0; i < longitud; i++)
+            {
                 if (orientacion == 'h')
                 {
                     CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila, coordenadaInicio.Columna + i), Nombre);
                 }
-                else if (orientacion == 'v') {
+                else if (orientacion == 'v')
+                {
                     CoordenadasBarco.Add(new Coordenada(coordenadaInicio.Fila + i, coordenadaInicio.Columna), Nombre);
                 }
             }
-            
-            
+
+
         }
 
-        public void Disparo(Coordenada c) {
+        public void Disparo(Coordenada c)
+        {
             string algo;
             bool encontrado;
             encontrado = CoordenadasBarco.TryGetValue(c, out algo);
             if (encontrado)
             {
-                CoordenadasBarco[c] = Nombre+"_T";
-                if (eventoTocado != null) {
+                CoordenadasBarco[c] = Nombre + "_T";
+                if (eventoTocado != null)
+                {
                     eventoTocado(this, new TocadoArgs(Nombre, c));
                 }
                 NumDanyos++;
-                if (hundido() && eventoHundido!=null) {
+                if (hundido() && eventoHundido != null)
+                {
                     eventoHundido(this, new HundidoArgs(Nombre));
                 }
             }
         }
 
-        public bool hundido() {
+        public bool hundido()
+        {
             bool aFlote = false;
             foreach (var pos in CoordenadasBarco)
             {
-                if (pos.Value != Nombre+"_T")
+                if (pos.Value != Nombre + "_T")
                 {
                     aFlote = true;
                     break;
@@ -61,12 +67,14 @@ namespace Hada
             return !aFlote;
         }
 
-        
-        public override string ToString() {
+
+        public override string ToString()
+        {
             string cadena = "";
-            cadena += "[" + Nombre + "] - DAÑOS: [" + NumDanyos + "] - HUNDIDO: ["+this.hundido()+"] - COORDENADAS:";
-            foreach (var pos in CoordenadasBarco) {
-                cadena += " [(" + pos.Key.Fila + "," + pos.Key.Columna + ")] :" + pos.Value;
+            cadena += "[" + Nombre + "] - DAÑOS: [" + NumDanyos + "] - HUNDIDO: [" + this.hundido() + "] - COORDENADAS:";
+            foreach (var pos in CoordenadasBarco)
+            {
+                cadena += " [(" + pos.Key.Fila + "," + pos.Key.Columna + ") :" + pos.Value + "]";
             }
             return cadena;
         }
