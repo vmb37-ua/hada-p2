@@ -90,12 +90,25 @@ namespace Hada
             return res;
         }
 
-        private void cuandoEventoTocado() { 
-            // Actualizar casilla?
+        private void cuandoEventoTocado(Barco sender, TocadoArgs e) {
+            casillasTablero[e.CoordenadaImpacto] = sender.Nombre + "_T";
+            System.Console.WriteLine("TABLERO: Barco ["+ sender.Nombre+"] tocado en:");
+            System.Console.WriteLine("Coordenada: [(" + e.CoordenadaImpacto.Fila + "," + e.CoordenadaImpacto.Columna + ")]");
         }
 
-        private void cuandoEventoHundido() { 
-            // Imprimir hundido?
+        private void cuandoEventoHundido(Barco sender, HundidoArgs e) {
+            System.Console.WriteLine("TABLERO: Barco [" + sender.Nombre + "] hundido!!");
+            bool encontrado_flote = false;
+            foreach (Barco b in barcos) {
+                if (!b.hundido()) { 
+                    encontrado_flote = true;
+                    break;
+                }
+            }
+
+            if (!encontrado_flote && eventoFinPartida!=null) {
+                eventoFinPartida(this, null);
+            }
         }
 
         public event EventHandler<EventArgs> eventoFinPartida;
